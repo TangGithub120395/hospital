@@ -1,0 +1,9 @@
+.menuPage {
+    margin-top: 8px;
+    :global(.ant-menu) {
+        border-inline-end: unset !important
+    }
+    :global(.ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline){
+        background: rgba(0, 0, 0, 0) !important
+    }
+}
