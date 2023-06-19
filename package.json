@@ -12,7 +12,9 @@
   "dependencies": {
     "@ant-design/icons": "^5.1.0",
     "antd": "^5.5.1",
+    "axios": "^1.4.0",
     "react": "^18.2.0",
+    "react-cookies": "^0.1.1",
     "react-dom": "^18.2.0",
     "react-redux": "^7.2.8",
     "react-router-dom": "^6.3.0",
@@ -20,8 +22,9 @@
     "reset-css": "^5.0.1"
   },
   "devDependencies": {
-    "@types/node": "^20.2.3",
+    "@types/node": "^20.3.1",
     "@types/react": "^18.0.28",
+    "@types/react-cookies": "^0.1.0",
     "@types/react-dom": "^18.0.11",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",

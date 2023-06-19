@@ -4,6 +4,7 @@ import LoadingPage from '../components/LoadingPage'
 
 // 懒加载
 const Home = lazy(() => import("../views/Home"))
+const Login = lazy(() => import("../views/Login"))
 
 // 重定向组件
 import { Navigate } from 'react-router-dom'
@@ -18,7 +19,11 @@ const withLoadingComponent = (comp: JSX.Element) => (
 const routes = [
     {
         path: "/",
-        element: <Navigate to="/home"></Navigate>
+        element: <Navigate to="/login"></Navigate>
+    },
+    {
+        path: "/login",
+        element: withLoadingComponent(<Login />)
     },
     {
         path: "/home",

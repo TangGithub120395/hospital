@@ -1,2 +1,17 @@
-.allPage{
+.allPage {}
+
+.logo {
+  height: 32px;
+  margin: 16px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+:global(.ant-layout-header)  {
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+:global(.ant-btn) {
+  border-radius: unset; 
 }

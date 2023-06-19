@@ -6,6 +6,7 @@ import "reset-css"
 import "@/assets/style/global.module.scss"
 import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom'
+
 // import Router from './router'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
