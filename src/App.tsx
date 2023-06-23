@@ -14,10 +14,10 @@ function ToLogin(){
 }
 
 // 去首页的组件
-function ToHome(){
+function ToIndex(){
   const navigateTo = useNavigate();
   useEffect(()=>{
-    navigateTo("/home")
+    navigateTo("/index")
   },[])
   return <div></div>
 }
@@ -38,7 +38,7 @@ function BeforeRouterEnter(){
   }
 
   if (location.pathname === "/login"  && nowCookie) {
-    return <ToHome />
+    return <ToIndex />
   }
 
   return outlet

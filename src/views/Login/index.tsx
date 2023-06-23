@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
 import style from './index.module.scss'
-import { Card, Button, Checkbox, Form, Input,message } from 'antd';
+import { Card, Button, Checkbox, Form, Input, message } from 'antd';
 import {
   RedoOutlined,
   CheckOutlined,
   SendOutlined
 } from '@ant-design/icons';
 
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 // 引入cookie
 import cookie from 'react-cookies'
 
 // 拿接口
-import { RegisterAPI,LoginAPI } from "@/apis/api.ts";
+import { RegisterAPI, LoginAPI } from "@/apis/api.ts";
 
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 
@@ -79,25 +79,29 @@ export default function View() {
   };
 
   // 请求成功
-  const onFinish = async (values={tel:"",password:"",userIdentity:3}) => {
-    if (flag) {    
+  const onFinish = async (values = { tel: "", password: "", userIdentity: 3 }) => {
+    if (flag) {
       // 发起登录请求
-      const loginAPIRes:LoginAPIRes = await LoginAPI(values)
-      // 存储用户信息
-      cookie.save('userData',loginAPIRes.data,{path:"/"})
+      const loginAPIRes: LoginAPIRes = await LoginAPI(values)
       // 提示
-      loginAPIRes.code === 0 ? message.success(loginAPIRes.msg) : message.error(loginAPIRes.msg);   
-      // 跳转
-      navigateTo("/home")
-    }else{
+      if (loginAPIRes.code === 0) {
+        message.success(loginAPIRes.msg)
+        // 存储用户信息
+        cookie.save('userData', loginAPIRes.data, { path: "/" })
+        // 跳转
+        navigateTo("/index")
+      } else {
+        message.error(loginAPIRes.msg);
+      }
+    } else {
       // 发起注册请求
-      const registerAPIRes:RegisterAPIRes = await RegisterAPI({
+      const registerAPIRes: RegisterAPIRes = await RegisterAPI({
         patientTel: values.tel,
         patientPassword: values.password,
-        userIdentity:3
+        userIdentity: 3
       })
       // 提示
-      registerAPIRes.code === 0 ? message.success(registerAPIRes.msg) : message.error(registerAPIRes.msg);   
+      registerAPIRes.code === 0 ? message.success(registerAPIRes.msg) : message.error(registerAPIRes.msg);
       // 切换登录状态
       changeType()
     }
