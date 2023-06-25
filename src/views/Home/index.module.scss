@@ -1,17 +1,54 @@
-.allPage {}
+@media only screen and (min-width: 700px) {
+  .allPage {}
 
-.logo {
-  height: 32px;
-  margin: 16px;
-  background: rgba(255, 255, 255, 0.3);
+  .logo {
+    height: 32px;
+    margin: 16px;
+    color: #eee;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  :global(.ant-layout-header) {
+    height: 50px;
+    display: flex;
+    align-items: center;
+  }
+
+  // :global(.ant-btn) {
+  //   border-radius: unset;
+  // }
+
 }
 
-:global(.ant-layout-header)  {
-  height: 50px;
-  display: flex;
-  align-items: center;
-}
+@media only screen and (max-width: 700px) {
+  .allPage {}
 
-:global(.ant-btn) {
-  border-radius: unset; 
+  .minSider {
+    width: 100%;
+  }
+
+  .logo {
+    height: 32px;
+    margin: 16px;
+    color: #eee;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  :global(.ant-layout-header) {
+    height: 50px;
+    display: flex;
+    align-items: center;
+  }
+
+  :global(.ant-btn) {
+    border-radius: unset;
+  }
 }

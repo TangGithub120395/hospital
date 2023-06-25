@@ -1,17 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   UserOutlined,
   MenuUnfoldOutlined,
-  MenuFoldOutlined
+  MenuFoldOutlined,
+  AntDesignOutlined
 } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Breadcrumb, Layout, Menu, theme, Button } from 'antd';
+import { Breadcrumb, Layout, Menu, theme, Button, Avatar } from 'antd';
 import style from './index.module.scss'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate, useLocation } from 'react-router-dom'
+import type { SubMenuType } from 'rc-menu/lib/interface';
+
+import Router from '../../router'
+
+const [,allRouter,] = Router
+// console.log(allRouter.children);
+
+// 导入退出登录组件
+import LogOut from '../../components/home/LogOut'
 
 const { Header, Content, Sider } = Layout;
 
-type MenuItem = Required<MenuProps>['items'][number];
+type MenuItem = SubMenuType;
 
 function getItem(
   label: React.ReactNode,
@@ -26,61 +35,126 @@ function getItem(
     label,
   } as MenuItem;
 }
-
 const items: MenuItem[] = [
   getItem('系统首页', '/index', <UserOutlined />),
-  getItem('科室管理', 'sub1', <UserOutlined />, [
-    getItem('科室信息管理', '/InformationManagement', <UserOutlined />),
-    getItem('医生岗位迁移', '/DoctorJobTransfer', <UserOutlined />),
+  getItem('科室管理', '/departmentManagement', <UserOutlined />, [
+    getItem('科室信息管理', '/informationManagement', <UserOutlined />),
+    getItem('医生岗位迁移', '/doctorJobTransfer', <UserOutlined />),
   ]),
-  getItem('医生管理', 'sub2', <UserOutlined />, [
-    getItem('医生注册登记', '4', <UserOutlined />),
-    getItem('医生信息管理', '5', <UserOutlined />),
+  getItem('医生管理', '/doctorManagement', <UserOutlined />, [
+    getItem('医生注册登记', '/doctorRegistration', <UserOutlined />),
+    getItem('医生信息管理', '/doctorInformationManagement', <UserOutlined />),
   ]),
-  getItem('患者信息管理', '6', <UserOutlined />),
-  getItem('财务管理', 'sub3', <UserOutlined />, [
+  getItem('患者信息管理', '/patientInformationManagement', <UserOutlined />),
+  getItem('财务管理', '/sub3', <UserOutlined />, [
     getItem('未缴信息统计', '7', <UserOutlined />),
     getItem('财务信息管理', '8', <UserOutlined />),
   ]),
-  getItem('药品管理', 'sub4', <UserOutlined />, [
+  getItem('药品管理', '/sub4', <UserOutlined />, [
     getItem('缺货统计', '9', <UserOutlined />),
     getItem('药品出入库', '10', <UserOutlined />),
   ]),
-  getItem('系统设置', 'sub5', <UserOutlined />, [
-    getItem('个人信息管理', '11', <UserOutlined />),
+  getItem('系统设置', '/systemSettings', <UserOutlined />, [
+    getItem('个人信息管理', '/personalInformationManagement', <UserOutlined />),
     getItem('菜单信息管理', '12', <UserOutlined />),
   ]),
 ];
 
 const View: React.FC = () => {
-
-  // 展开收回菜单
-  const [collapsed, setCollapsed] = useState(false);
+  // 拿当前路由
+  const location = useLocation()
 
   // 跳转路由hook
   const navigateTo = useNavigate();
 
   // 面包屑列表  
-  // const nowBreadcrumbList = {
-  //   title: '系统首页',
-  //   href: '/index',
-  // }
-  const [nowBreadcrumbList, setNowBreadcrumbList] = useState({title: '系统首页',href: '/index'});
-  // 菜单点击事件
-  const menuClick = (e: { key: string }) => {
-    navigateTo(e.key);
-    setNowBreadcrumbList({title: '系统首页',href: e.key})
+  const [nowBreadcrumbList, setNowBreadcrumbList] = useState([{ title: '系统首页', href: '/index' }]);
+  // 初次加载面包屑
+  useEffect(() => {
+    showBreadcrumbList(location.pathname)
+  }, [])
 
-    // setBreadcrumbList
+  // 显示面包屑
+  const showBreadcrumbList = (nowPath: string) => {
+    // 初始化面包屑
+    let nowBreadcrumbListList = [{ title: '系统首页', href: '/index' }]
+    // 寻找面包屑路径下标题      
+    for (let i = 0; i < items.length; i++) {
+      const element = items[i];
+      if (element.key === nowPath && element.key !== "/index") {
+        nowBreadcrumbListList.push({ title: element.label as string, href: nowPath })
+        break
+      }
+      if (element.children != null) {
+        for (let j = 0; j < element.children.length; j++) {
+          const elementChildren: any = element.children[j];
+          if (elementChildren.key === nowPath && elementChildren.key !== "/index") {
+            nowBreadcrumbListList.push({ title: element.label as string, href: "/index" })
+            nowBreadcrumbListList.push({ title: elementChildren?.label, href: nowPath })
+            break
+          }
+        }
+      }
+    }
+    setNowBreadcrumbList(nowBreadcrumbListList)
   }
 
+  // 展开菜单
+  let fatherMenuItem: Array<string> = [];
+  // 找父级菜单  
+  const findFatherMenu = (nowPath:string) => {
+    // 现在的路由
+    for (let i = 0; i < items.length; i++) {
+      const element: any = items[i];
+      if (element?.key !== nowPath) {
+        if (element?.children != null) {
+          for (let j = 0; j < element.children.length; j++) {
+            const elementChildren = element.children[j];
+            if (elementChildren.key === nowPath) {
+              fatherMenuItem.push(element.key);
+              break
+            }
+          }
+        }
+      }
+    }
+    return fatherMenuItem
+  }
+  findFatherMenu(location.pathname)
+
+  // 菜单点击事件
+  const menuClick = (e: { key: string, keyPath: Array<string> }) => {
+    // 显示面包屑
+    showBreadcrumbList(e.keyPath[0]);
+    // 修改当前选中
+    setNowSelect(e.key)
+    // 跳转
+    navigateTo(e.key);
+  }
+  // 当前选中
+  const [nowSelect, setNowSelect] = useState(location.pathname);
+  // 选中方法
+  const changeSelect = (nowPath: string) => {
+    setNowSelect(nowPath)
+    setOpenKeys(findFatherMenu(nowPath))
+  }
 
   // 当前展开菜单
-  const [openKeys, setOpenKey] = useState([''])
+  const [openKeys, setOpenKeys] = useState(fatherMenuItem)
+  const [oldOpenKeys, setOldOpenKeys] = useState([""])
   // 菜单收缩事件
   const handleOpenChange = (keys: string[]) => {
-    setOpenKey([keys[keys.length - 1]])
+    setOpenKeys([keys[keys.length - 1]])
+  }
 
+  // 展开收回菜单
+  const [collapsed, setCollapsed] = useState(false);
+  // 展开收回事件
+  const collapseMenu = () => {
+    // 合上前的路由
+    setCollapsed(!collapsed)
+    // 展开时展开之前的菜单项
+    collapsed ? setOpenKeys(oldOpenKeys) : setOldOpenKeys(openKeys)
   }
 
   const {
@@ -92,10 +166,14 @@ const View: React.FC = () => {
     <Layout style={{ minHeight: '100vh' }}>
       {/* 侧边栏 */}
       <Sider breakpoint="lg" collapsedWidth={window.innerWidth < 700 ? 0 : 75} trigger={null} collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-        <div className={style.logo} />
+        <div className={style.logo} >
+          <Avatar style={{ backgroundColor: '#1677ff' }} icon={<AntDesignOutlined />} />
+          <div style={collapsed ? { display: 'none' } : { height: '20px', width: '110px', overflow: 'hidden' }}>门诊诊疗系统</div>
+        </div>
         <Menu
           theme="dark"
-          defaultSelectedKeys={['/index']}
+          defaultSelectedKeys={[nowSelect]}
+          selectedKeys={[nowSelect]}
           mode="inline"
           items={items}
           onClick={menuClick}
@@ -104,14 +182,14 @@ const View: React.FC = () => {
         />
       </Sider>
       {/* 右侧布局 */}
-      <Layout>
+      <Layout style={{ width: "100%" }}>
         {/* 头部布局 */}
         <Header style={{ padding: 0, background: colorBgContainer }} >
           {/* 收起菜单按钮 */}
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
+            onClick={collapseMenu}
             style={{
               fontSize: '16px',
               width: 50,
@@ -120,16 +198,20 @@ const View: React.FC = () => {
           />
           {/* 面包屑 */}
           <Breadcrumb
-            style={{ margin: ' 0 5px' }}
+            style={{ margin: ' 0 5px', width: "500px" }}
             separator="/"
-            items={[nowBreadcrumbList]}
+            items={nowBreadcrumbList}
           />
+
+          {/* 下拉菜单 */}
+          <div style={{ marginLeft: 'auto' }}>
+            <LogOut changeSelect={changeSelect} showBreadcrumbList={showBreadcrumbList} ></LogOut>
+          </div>
+
         </Header>
         {/* 内容布局 */}
         <Content style={{ margin: '16px' }}>
-          <div style={{ padding: 24, minHeight: 360, background: colorBgContainer }}>
             <Outlet />
-          </div>
         </Content>
       </Layout>
     </Layout>
@@ -137,3 +219,4 @@ const View: React.FC = () => {
 };
 
 export default View;
+

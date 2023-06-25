@@ -46,7 +46,7 @@ function BeforeRouterEnter(){
 
 function App() {
   return (
-    <div>
+    <div style={{overflow:'hidden'}}>
       <BeforeRouterEnter />
     </div>
   )

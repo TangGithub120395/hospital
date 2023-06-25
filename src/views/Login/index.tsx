@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import style from './index.module.scss'
 import { Card, Button, Checkbox, Form, Input, message } from 'antd';
 import {
   RedoOutlined,
-  CheckOutlined,
   SendOutlined
 } from '@ant-design/icons';
 
@@ -13,7 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import cookie from 'react-cookies'
 
 // 拿接口
-import { RegisterAPI, LoginAPI } from "@/apis/api.ts";
+import { RegisterAPI, LoginAPI } from "../../apis/api.ts";
 
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 
