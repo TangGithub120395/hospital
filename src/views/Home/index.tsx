@@ -12,7 +12,7 @@ import type { SubMenuType } from 'rc-menu/lib/interface';
 
 import Router from '../../router'
 
-const [,allRouter,] = Router
+const [, allRouter,] = Router
 // console.log(allRouter.children);
 
 // 导入退出登录组件
@@ -102,7 +102,7 @@ const View: React.FC = () => {
   // 展开菜单
   let fatherMenuItem: Array<string> = [];
   // 找父级菜单  
-  const findFatherMenu = (nowPath:string) => {
+  const findFatherMenu = (nowPath: string) => {
     // 现在的路由
     for (let i = 0; i < items.length; i++) {
       const element: any = items[i];
@@ -210,8 +210,10 @@ const View: React.FC = () => {
 
         </Header>
         {/* 内容布局 */}
-        <Content style={{ margin: '16px' }}>
+        <Content style={{ overflowY: 'scroll',maxHeight:'calc(100vh - 50px)' }}>
+          <div style={{ margin: '14px' }}>
             <Outlet />
+          </div>
         </Content>
       </Layout>
     </Layout>

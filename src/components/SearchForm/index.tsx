@@ -1,27 +1,36 @@
 import React from 'react';
 import { Button, Space, Select, Form, Input, Col, Row } from 'antd';
 import { RedoOutlined, SearchOutlined } from '@ant-design/icons/lib/icons';
+import { AxiosRequestConfig } from 'axios';
 
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
 
 type propsType = {
-  options: optionsType[]
-  queryFunc: (optionData?: optionsDataType) => void
+  options: optionsType[];
+  queryFunc: (optionData?: optionsDataType) => void;
+  queryAPI: (searchForm: AxiosRequestConfig<QueryAPIReq>) => Promise<void>;
 }
 
-
 const App: React.FC<propsType> = (props: propsType) => {
+  // 表单信息
   const [form] = Form.useForm();
+
+  // 重置查找
   const onReset = () => {
-    form.resetFields();
+    // 重置表单
+    form.resetFields();  
+    // 重新查找
+    props.queryFunc({ key: props.options[0].value, value:'' })  
   };
 
+  // 查找
   const onFinish = (values: any) => {
     // 调用父级的查找方法
     props.queryFunc(values)
   };
+
   return (
     <Form
       form={form}

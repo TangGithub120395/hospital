@@ -135,6 +135,7 @@ export default function View() {
           <Form
             name="basic"
             form={form}
+            labelAlign='left'
             labelCol={{ span: 6 }}
             wrapperCol={{ span: 18 }}
             initialValues={{ remember: true }}

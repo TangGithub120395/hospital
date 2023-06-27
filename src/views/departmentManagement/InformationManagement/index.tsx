@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Button, Space } from 'antd';
+import { Card, Button, Space, Table, Popover, Form, Input } from 'antd';
+import style from './index.module.scss'
 import {
   SearchOutlined,
-  PlusOutlined
+  PlusOutlined,
+  RedoOutlined,
+  CheckOutlined
 } from '@ant-design/icons';
 
 // 拿搜索表单
@@ -11,6 +14,13 @@ import SearchForm from '../../../components/SearchForm'
 // 拿接口
 import { addInformationManagementAPI, delInformationManagementAPI, updateInformationManagementAPI, getInformationManagementAPI } from "../../../apis/api.ts";
 import { AxiosRequestConfig } from 'axios';
+import { ColumnsType } from 'antd/es/table/InternalTable';
+import type { FormInstance } from 'antd/es/form';
+
+interface DataType {
+  departmentId: number | null;
+  departmentName: string;
+}
 
 export default function View() {
 
@@ -24,8 +34,15 @@ export default function View() {
     pageNum: 1,
     pageSize: 10
   }
+
   // 查到的数据
-  const [tableList, setTableList] = useState({});
+  const [tableList, setTableList] = useState<QueryAPIRes>();
+  // 加载状态
+  const [loading, setLoading] = useState(true);
+  // 搜索框
+  const [showSearch, setShowSearch] = useState(true);
+  // 每行的数据修改
+  const [selectedRow, setSelectedRow] = useState<DataType>();
 
   // 初始查找
   useEffect(() => {
@@ -41,26 +58,142 @@ export default function View() {
 
   // 查找接口
   const queryAPI = async (searchForm: AxiosRequestConfig<QueryAPIReq>) => {
-    // 发起登录请求
+    // 发起查找请求
     const tableList = await getInformationManagementAPI(searchForm)
     setTableList(tableList)
+    setLoading(false)
   };
 
-  console.log(tableList);
+  // 新增修改按钮
+  const onFinish = (values: DataType) => {
+    let sumbitForm = {
+      departmentId: values.departmentId,
+      departmentName: selectedRow?.departmentName
+    }
+    // 新增方法
+    const addAPI = () => {
+      console.log('新增', sumbitForm);
+    }
+    // 修改方法
+    const updateAPI = () => {
+      console.log('修改', sumbitForm);
+    }
+    form.setFieldsValue(sumbitForm)
+    sumbitForm?.departmentId === undefined ? addAPI() : updateAPI()
+  };
 
+  // 新增修改表单信息
+  const [form] = Form.useForm();
+  // 更新数据
+  const handleFormChange = (changedValues: DataType) => {
+    // 更新选中行的数据状态
+    const updatedRow = { ...selectedRow, ...changedValues };
+    setSelectedRow(updatedRow);
+  };
+  // 新增修改表单
+  const formContent = (record?: DataType) => {
+    return (
+      <Form form={form}
+        labelAlign='left'
+        onFinish={onFinish}
+        labelCol={{ span: 7 }}
+        wrapperCol={{ span: 17 }}
+        onValuesChange={handleFormChange}>
+        <Form.Item hidden={record ? false : true} label="科室ID" name="departmentId" style={{ marginTop: '20px' }}>
+          <Input disabled />
+        </Form.Item>
+        <Form.Item label="科室名称" name='departmentName' style={{ marginTop: '20px' }}>
+          <Input placeholder="请输入科室名" />
+        </Form.Item>
+        <Form.Item>
+          <div className={style.btnBox}>
+            <Button type="primary" icon={<CheckOutlined />} htmlType="submit"> {record ? '修改' : '新增'} </Button>
+            <Button onClick={onReset} icon={<RedoOutlined />}>重置</Button>
+          </div>
+        </Form.Item>
+      </Form>
+    )
+  }
 
+  // 重置表单
+  const onReset = () => {
+    form.resetFields()
+  }
+
+  // 表头
+  const columns: ColumnsType<DataType> = [
+    {
+      title: 'ID',
+      dataIndex: 'departmentId',
+      align: 'center',
+      width: window.innerWidth < 700 ? 0 : 80,
+    },
+    {
+      title: '科室名称',
+      dataIndex: 'departmentName',
+      align: 'center',
+    },
+    {
+      title: '操作',
+      align: 'center',
+      width: window.innerWidth < 700 ? 0 : 200,
+      render: (text, record) => {
+        return (
+          <Space>
+            <Popover placement="bottom" title={'修改科室：' + record.departmentName} content={formContent(record)} trigger="click">
+              <Button size='small' type="link">修改</Button>
+            </Popover>
+            <Button size='small' danger type="link">删除</Button>
+          </Space>
+        )
+      },
+    },
+  ];
+  // 分页
+  const paginationProps = {
+    current: tableList?.pageNum, //当前页码
+    pageSize: tableList?.pageSize, // 每页数据条数
+    total: tableList?.total, // 总条数
+    showTotal: () => (
+      <span>共 {tableList?.total} 条</span>
+    ),
+    onChange: (page: number) => handlePageChange(page), //改变页码的函数
+    showQuickJumper: true,
+  }
+
+  const handlePageChange = (page: number) => {
+    searchForm.pageNum = page
+    queryAPI(searchForm as AxiosRequestConfig<QueryAPIReq>);
+  }
 
   // 顶部按钮
   // pc端
   const pcTopBtn =
     <Space>
-      <Button type="primary" shape="circle" icon={<SearchOutlined />} />
-      <Button type="primary" shape="circle" icon={<PlusOutlined />} />
+      <Button type="primary" shape="circle" icon={<SearchOutlined />} onClick={() => { setShowSearch(!showSearch) }} />
+      <Popover placement="bottomRight" title={'新增科室'} content={formContent} trigger="click">
+        <Button type="primary" shape="circle" icon={<PlusOutlined />} />
+      </Popover>
     </Space>
-
   return (
-    <Card title="科室信息管理" extra={pcTopBtn} bordered={false} style={{ width: '100%', height: '100%' }}>
-      <SearchForm options={options} queryFunc={queryFunc} />
+    <Card className={style.allPage} title="科室信息管理" extra={pcTopBtn} bordered={false} style={{ width: '100%' }}>
+      <div style={showSearch ? { display: 'none' } : { display: 'block' }}>
+        <SearchForm options={options} queryFunc={queryFunc} queryAPI={queryAPI} />
+      </div>
+      <Table
+        columns={columns}
+        dataSource={tableList?.data}
+        rowKey='departmentId'
+        size='middle' bordered
+        loading={loading}
+        pagination={paginationProps}
+        onRow={(record: DataType) => ({
+          onClick: () => {
+            form.setFieldsValue(record)
+          }
+        })}
+      />
     </Card>
   )
 }
+
