@@ -72,7 +72,8 @@ const View: React.FC = () => {
   // 初次加载面包屑
   useEffect(() => {
     showBreadcrumbList(location.pathname)
-  }, [])
+    changeSelect(location.pathname)
+  }, [location.pathname])
 
   // 显示面包屑
   const showBreadcrumbList = (nowPath: string) => {
@@ -205,7 +206,7 @@ const View: React.FC = () => {
 
           {/* 下拉菜单 */}
           <div style={{ marginLeft: 'auto' }}>
-            <LogOut changeSelect={changeSelect} showBreadcrumbList={showBreadcrumbList} ></LogOut>
+            <LogOut></LogOut>
           </div>
 
         </Header>

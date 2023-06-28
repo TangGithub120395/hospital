@@ -26,11 +26,7 @@ const items: MenuProps['items'] = [
     key: '1',
   },
 ];
- type props ={
-  changeSelect: (nowPath: string) => void
-  showBreadcrumbList: (nowPath: string) => void
- }
-const App: React.FC<props> = (props:any ) => {
+const App: React.FC = () => {
   // 拿路由hook
   let navigateTo = useNavigate();
   // 获取用户名
@@ -50,10 +46,6 @@ const App: React.FC<props> = (props:any ) => {
       const nowRouter = "/personalInformationManagement"
       // 跳转
       navigateTo(nowRouter)
-      // 修改菜单选中
-      props.changeSelect(nowRouter)
-      // 修改面包屑
-      props.showBreadcrumbList(nowRouter)
     } else if (key === '1') {
       // 存储用户信息
       cookie.remove('userData')

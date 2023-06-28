@@ -3,7 +3,7 @@ import axios from "axios"
 // 创建axios实例
 const instance = axios.create({
   // 基本请求路径的抽取
-  baseURL: "http://192.168.137.1:8080",
+  baseURL: "http://localhost:8080",
   // 这个时间是你每次请求的过期时间，这次请求认为20秒之后这个请求就是失败的
   timeout: 20000
 })

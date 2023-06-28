@@ -2,8 +2,10 @@ import { useState } from 'react'
 import style from './index.module.scss'
 import { Card, Button, Checkbox, Form, Input, message } from 'antd';
 import {
+  LockOutlined,
   RedoOutlined,
-  SendOutlined
+  SendOutlined,
+  UserOutlined
 } from '@ant-design/icons';
 
 import { useNavigate } from 'react-router-dom'
@@ -49,7 +51,7 @@ export default function View() {
   if (!flag) {
     checkPassword =
       <Form.Item
-        label="确认密码"
+        // label="确认密码"
         name="confirm"
         dependencies={['password']}
         hasFeedback
@@ -68,7 +70,7 @@ export default function View() {
           }),
         ]}
       >
-        <Input.Password placeholder="请确认密码" />
+        <Input.Password prefix={<LockOutlined className={style.siteFormItemIcon} />} placeholder="请确认密码" />
       </Form.Item>
   }
 
@@ -136,8 +138,7 @@ export default function View() {
             name="basic"
             form={form}
             labelAlign='left'
-            labelCol={{ span: 6 }}
-            wrapperCol={{ span: 18 }}
+            wrapperCol={{ span: 23 }}
             initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
@@ -145,17 +146,16 @@ export default function View() {
           >
             <Form.Item
               initialValue={reset ? "" : login.tel}
-              label="手机号"
+              // label="手机号"
               name="tel"
               rules={[{ required: true, pattern: new RegExp(/^[1-9]\d*$/, "g"), message: '请输入正确格式的手机号！' }]}
               hasFeedback
             >
-              <Input placeholder="请输入手机号" />
+              <Input prefix={<UserOutlined className={style.siteFormItemIcon} />} placeholder="请输入手机号" />
             </Form.Item>
-
             <Form.Item
               initialValue={reset ? "" : login.password}
-              label="密码"
+              // label="密码"
               name="password"
               rules={[
                 {
@@ -165,17 +165,17 @@ export default function View() {
               ]}
               hasFeedback
             >
-              <Input.Password placeholder="请输入密码" />
+              <Input.Password prefix={<LockOutlined className={style.siteFormItemIcon} />} placeholder="请输入密码" />
             </Form.Item>
 
             {checkPassword}
 
-            <Form.Item valuePropName="checked" wrapperCol={{ offset: 6, span: 18 }}>
+            <Form.Item valuePropName="checked">
               <Checkbox checked={remember} onChange={onChange}>记住我</Checkbox>
               <Button type="text" style={{ color: '#1677ff' }} onClick={changeType}>患者{flag ? "注册" : "登录"}</Button>
             </Form.Item>
 
-            <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
+            <Form.Item wrapperCol={{ offset: 10 }}>
               <Button type="primary" htmlType="submit">
                 {/* <CheckOutlined /> */}
                 <SendOutlined />

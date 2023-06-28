@@ -189,7 +189,7 @@ export default function View() {
       </Popover>
     </Space>
   return (
-    <Card className={style.allPage} title="科室信息管理" extra={pcTopBtn} bordered={false} style={{ width: '100%' ,height:'calc(100vh - 80px)' }}>
+    <Card className={style.allPage} size='small' title="科室信息管理" extra={pcTopBtn} bordered={false} style={{ width: '100%' ,minHeight:'calc(100vh - 80px)' }}>
       <div style={showSearch ? { display: 'none' } : { display: 'block' }}>
         <SearchForm options={options} queryFunc={queryFunc} queryAPI={queryAPI} />
       </div>
