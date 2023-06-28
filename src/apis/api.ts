@@ -16,7 +16,7 @@ export const RegisterAPI = (params: RegisterAPIReq): Promise<RegisterAPIRes> => 
 
 // 科室信息管理
 // 增
-export const addInformationManagementAPI = (params: RegisterAPIReq): Promise<CurrentAPIRes> => request.post("/user/register", params);
+export const addInformationManagementAPI = (params: object): Promise<CurrentAPIRes> => request.post("/department", params);
 // 删
 export const delInformationManagementAPI = (params: number): Promise<CurrentAPIRes> => request.delete("/department/" + params);
 // 改
