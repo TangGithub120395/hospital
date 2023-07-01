@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Divider, Form, Input, Modal, Select, message } from 'antd';
+import { Button, Divider, Form, Input, Modal, Radio, Select, message } from 'antd';
 import { queryOneDoctorAPI, queryAllDepartmentAPI, updateDoctorAPI } from "../../../apis/api";
 import { ExclamationCircleFilled } from '@ant-design/icons';
 
@@ -63,7 +63,7 @@ const App: React.FC<Values> = ({ title, doctorId, columns, queryFunc }) => {
   const [open, setOpen] = useState(false);
 
   // 提交表单
-  const onCreate =  (values: any) => {
+  const onCreate = (values: any) => {
     let submitObj = values;
     submitObj["userIdentity"] = 2;
     confirm({
@@ -72,7 +72,7 @@ const App: React.FC<Values> = ({ title, doctorId, columns, queryFunc }) => {
       cancelText: '取消',
       icon: <ExclamationCircleFilled />,
       content: '注意，更改无法撤回！',
-      async onOk () {
+      async onOk() {
         const flagData = await updateDoctorAPI(submitObj)
         message.success(flagData.msg);
         setTimeout(() => {
@@ -102,6 +102,12 @@ const App: React.FC<Values> = ({ title, doctorId, columns, queryFunc }) => {
       sm: { span: 19 },
     },
   };
+
+  // 性别选择
+  const optionsSex = [
+    { label: '男', value: 1 },
+    { label: '女', value: 2 },
+  ];
 
   // 表单信息
   const [form] = Form.useForm();
@@ -139,27 +145,17 @@ const App: React.FC<Values> = ({ title, doctorId, columns, queryFunc }) => {
         >
           <Divider />
           {columns.map((res, index) => {
+            const a = <Radio.Group options={optionsSex} name='doctorSex' />
+            const b = <Input placeholder={'请输入' + res.title} disabled={res.dataIndex === "doctorId" ? true : false} />
+            const c = <Select placeholder="请选择科室" allowClear style={{ width: 200 }} options={departmentData} />
             let formItem
-            if (res.dataIndex && res.title != '所在科室') {
+            if (res.title != '操作') {
               formItem = <Form.Item
                 key={index}
-                name={res.dataIndex as string}
+                name={res.title === '所在科室' ? 'departmentId' :res.dataIndex as string}
                 label={res.title as string}
               >
-                <Input placeholder={'请输入' + res.title} disabled={res.dataIndex === "doctorId" ? true : false} />
-              </Form.Item>
-            } else if (res.title === '所在科室') {
-              formItem = <Form.Item
-                key={index}
-                name='departmentId'
-                label={res.title as string}
-              >
-                <Select
-                  placeholder="请选择科室"
-                  allowClear
-                  style={{ width: 200 }}
-                  options={departmentData}
-                />
+                {res.dataIndex === 'doctorSex' ? a : (res.title === '所在科室' ? c : b)}
               </Form.Item>
             }
             return formItem

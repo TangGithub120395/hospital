@@ -19,6 +19,12 @@ type DataType = {
   userIdentity: number;
 }
 
+type ColumnsDataType = {
+  title: string;
+  dataIndex: string;
+  align: string;
+}
+
 export default function View() {
   /* 查找列表开始 */
 
@@ -122,7 +128,7 @@ export default function View() {
       render: (_, record) => {
         return (
           <Space>
-            <ModifyForm title={'修改医生：'+record.doctorName} doctorId={record.doctorId as number} columns={columns} queryFunc={queryFunc}/>
+            <ModifyForm title={'修改医生：'+record.doctorName} doctorId={record.doctorId as number} columns={columns as Array<ColumnsDataType>} queryFunc={queryFunc}/>
             <Popconfirm
               placement="bottomRight"
               title={'删除'}

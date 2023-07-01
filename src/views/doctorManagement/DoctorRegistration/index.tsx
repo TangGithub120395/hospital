@@ -43,16 +43,22 @@ export default function View() {
       navigateTo("/doctorInformationManagement")
     }
   }
+
+  // 性别选择
+  const optionsSex = [
+    { label: '男', value: 1 },
+    { label: '女', value: 2 },
+  ];
+
   // 重置表单
   const onReset = () => form.resetFields();
   // 拿表单
   const [form] = Form.useForm();
   return (
-    <Card title="医生注册登记" bordered={false} style={{ width: '100%', minHeight: 'calc(100vh - 80px)' }}>
+    <Card title="医生注册登记" bordered={false} size='small' style={{ width: '100%', minHeight: 'calc(100vh - 80px)' }}>
       <div className={style.allPage}>
         <div className={style.contentBox}>
           <Form
-            size={window.innerWidth < 700 ? 'middle' : 'large'}
             form={form}
             labelCol={{ span: 6 }}
             initialValues={{ doctorSex: 1 }}
@@ -84,14 +90,8 @@ export default function View() {
                 options={options}
               />
             </Form.Item>
-            <Form.Item
-              label="性别"
-              name='doctorSex'
-            >
-              <Radio.Group>
-                <Radio value={1}>男</Radio>
-                <Radio value={2}>女</Radio>
-              </Radio.Group>
+            <Form.Item label="性别" name='doctorSex'>
+              <Radio.Group options={optionsSex} name='doctorSex' />
             </Form.Item>
             <Form.Item
               label="年龄"
