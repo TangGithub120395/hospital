@@ -20,7 +20,7 @@ interface DataType {
 }
 
 export default function View() {
-  // 登陆注册标志
+  // 科室列表
   const [options, setOptions] = useState<Array<DataType>>();
   // 调查全部科室接口
   const getAllDepartment = async () => {

@@ -27,10 +27,12 @@ export const getInformationManagementAPI = (params: AxiosRequestConfig<QueryAPIR
 export const addDoctorAPI = (params: object): Promise<CurrentAPIRes> => request.post("/doctor", params);
 //查全部科室
 export const queryAllDepartmentAPI = (): Promise<QueryAPIRes> => request.get("/department/queryAllDepartment");
-// 根据id查科室
-export const queryOneDepartmentAPI = (params: number): Promise<CurrentAPIRes> => request.get("/department/queryOneDepartment/" + params);
+// 根据科室id查全部医生
+export const queryDepartmentDoctorAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/doctor/queryDepartmentDoctor", {params});
 // 根据id查医生
 export const queryOneDoctorAPI = (params: number): Promise<CurrentAPIRes> => request.get("doctor/queryOneDoctor/" + params);
+// 修改医生科室
+export const updateDoctorDepartmentAPI = (params: object): Promise<CurrentAPIRes> => request.put("/doctor/updateDoctorDepartment", params);
 // 删
 export const delDoctorAPI = (params: number): Promise<CurrentAPIRes> => request.delete("/doctor/" + params);
 // 改

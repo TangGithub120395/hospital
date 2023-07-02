@@ -95,11 +95,11 @@ const App: React.FC<Values> = ({ title, doctorId, columns, queryFunc }) => {
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
-      sm: { span: 5 },
+      sm: { span: 4 },
     },
     wrapperCol: {
       xs: { span: 24 },
-      sm: { span: 19 },
+      sm: { span: 20 },
     },
   };
 
@@ -142,6 +142,7 @@ const App: React.FC<Values> = ({ title, doctorId, columns, queryFunc }) => {
           form={form}
           initialValues={doctorData}
           name={'form_in_modal' + doctorId}
+          labelAlign='left'
         >
           <Divider />
           {columns.map((res, index) => {
