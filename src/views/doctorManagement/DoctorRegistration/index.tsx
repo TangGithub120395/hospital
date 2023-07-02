@@ -91,7 +91,7 @@ export default function View() {
               />
             </Form.Item>
             <Form.Item label="性别" name='doctorSex'>
-              <Radio.Group options={optionsSex} name='doctorSex' />
+              <Radio.Group options={optionsSex} />
             </Form.Item>
             <Form.Item
               label="年龄"

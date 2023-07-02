@@ -19,7 +19,6 @@ export const delInformationManagementAPI = (params: number): Promise<CurrentAPIR
 export const updateInformationManagementAPI = (params: object): Promise<CurrentAPIRes> => request.put("/department", params);
 // 查
 export const getInformationManagementAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/department", {params});
-
 /* 科室管理结束 */
 
 /* 医生管理开始 */
@@ -40,4 +39,15 @@ export const updateDoctorAPI = (params: object): Promise<CurrentAPIRes> => reque
 // 查
 export const getDoctorAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/doctor", {params});
 /* 医生管理结束 */
+
+/* 患者信息管理开始 */
+// 增
+export const addPatientAPI = (params: object): Promise<CurrentAPIRes> => request.post("/patient", params);
+// 删
+export const delPatientAPI = (params: number): Promise<CurrentAPIRes> => request.delete("/patient/" + params);
+// 改
+export const updatePatientAPI = (params: object): Promise<CurrentAPIRes> => request.put("/patient", params);
+// 查
+export const quertPatientAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/patient", {params});
+/* 患者信息管理结束 */
 

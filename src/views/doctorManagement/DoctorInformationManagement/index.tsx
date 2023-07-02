@@ -6,7 +6,7 @@ import { AxiosRequestConfig } from "axios";
 import { getDoctorAPI, delDoctorAPI } from "../../../apis/api";
 import style from './index.module.scss'
 import { ColumnsType } from "antd/es/table";
-import ModifyForm from '../../../components/doctorManagement/ModifyForm'
+import ModifyForm from '../../../components/doctorManagement/ModifyDoctorForm'
 
 type DataType = {
   doctorId: number | null;
@@ -29,7 +29,7 @@ export default function View() {
   /* 查找列表开始 */
 
   // 搜索框
-  const [showSearch, setShowSearch] = useState(true);
+  const [open, setOpen] = useState<boolean | null>(null);
   // 查到的数据
   const [tableList, setTableList] = useState<QueryAPIRes>();
   // 加载状态
@@ -70,7 +70,7 @@ export default function View() {
   }, [])
 
   // 顶部按钮
-  const topBtn = <Button style={{ margin: '6px 0px' }} type="primary" shape="circle" icon={<SearchOutlined />} onClick={() => { setShowSearch(!showSearch) }} />
+  const topBtn = <Button type="primary" shape="circle" icon={<SearchOutlined />} onClick={() => open === null ? setOpen(true) : setOpen(!open)} />
 
   /* 查找列表结束 */
 
@@ -128,7 +128,7 @@ export default function View() {
       render: (_, record) => {
         return (
           <Space>
-            <ModifyForm title={'修改医生：'+record.doctorName} doctorId={record.doctorId as number} columns={columns as Array<ColumnsDataType>} queryFunc={queryFunc}/>
+            <ModifyForm title={'修改医生：' + record.doctorName} doctorId={record.doctorId as number} columns={columns as Array<ColumnsDataType>} queryFunc={queryFunc} />
             <Popconfirm
               placement="bottomRight"
               title={'删除'}
@@ -163,11 +163,11 @@ export default function View() {
   }
   /* 表格结束 */
 
+
   return (
     <Card className={style.allPage} size='small' title="医生信息管理" extra={topBtn} bordered={false} style={{ width: '100%', minHeight: 'calc(100vh - 80px)' }}>
-      <div style={showSearch ? { display: 'none' } : { display: 'block' }}>
-        <SearchForm options={options} queryFunc={queryFunc} queryAPI={queryAPI} />
-      </div>
+      {/* 搜索组件 */}
+      <SearchForm options={options} queryFunc={queryFunc} queryAPI={queryAPI} open={open} />
       <Table
         columns={columns}
         dataSource={tableList?.data}

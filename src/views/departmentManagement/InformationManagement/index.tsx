@@ -23,6 +23,8 @@ interface DataType {
 }
 
 export default function View() {
+  // 搜索框
+  const [open, setOpen] = useState<boolean | null>(null);
 
   let options: Array<optionsType> = [
     { value: 'department_name', label: '科室名称' },
@@ -183,16 +185,15 @@ export default function View() {
   // pc端
   const pcTopBtn =
     <Space>
-      <Button type="primary" shape="circle" icon={<SearchOutlined />} onClick={() => { setShowSearch(!showSearch) }} />
+      <Button type="primary" shape="circle" icon={<SearchOutlined />} onClick={() => open === null ? setOpen(true) : setOpen(!open)} />
       <Popover placement="bottomRight" title={'新增科室'} content={formContent} trigger="click">
-        <Button type="primary" shape="circle" onClick={() => {setChangeFlag(true); form.setFieldsValue({departmentName:""})}} icon={<PlusOutlined />} />
+        <Button type="primary" shape="circle" onClick={() => { setChangeFlag(true); form.setFieldsValue({ departmentName: "" }) }} icon={<PlusOutlined />} />
       </Popover>
     </Space>
   return (
-    <Card className={style.allPage} size='small' title="科室信息管理" extra={pcTopBtn} bordered={false} style={{ width: '100%' ,minHeight:'calc(100vh - 80px)' }}>
-      <div style={showSearch ? { display: 'none' } : { display: 'block' }}>
-        <SearchForm options={options} queryFunc={queryFunc} queryAPI={queryAPI} />
-      </div>
+    <Card className={style.allPage} size='small' title="科室信息管理" extra={pcTopBtn} bordered={false} style={{ width: '100%', minHeight: 'calc(100vh - 80px)' }}>
+      {/* 搜索组件 */}
+      <SearchForm options={options} queryFunc={queryFunc} queryAPI={queryAPI} open={open} />
       <Table
         columns={columns}
         dataSource={tableList?.data}
