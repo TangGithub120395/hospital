@@ -51,3 +51,13 @@ export const updatePatientAPI = (params: object): Promise<CurrentAPIRes> => requ
 export const quertPatientAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/patient", {params});
 /* 患者信息管理结束 */
 
+/* 药品管理开始 */
+// 缺货统计
+// 查
+export const getScarceDrugsAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("drugs/getScarceDrugs", {params});
+// 补货
+export const drugReplenishment = (params: object): Promise<CurrentAPIRes> => request.put("/drugs/drugReplenishment", params);
+// 药品出入库
+
+/* 药品管理结束 */
+

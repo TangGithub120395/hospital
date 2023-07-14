@@ -15,6 +15,8 @@ const PersonalInformationManagement = lazy(() => import("../views/systemSettings
 
 // 重定向组件
 import { Navigate, RouteObject } from 'react-router-dom'
+import DrugEntryAndExit from '../views/drugManagement/DrugEntryAndExit'
+import OutOfStockStatistics from '../views/drugManagement/OutOfStockStatistics'
 // 写法简化
 const withLoadingComponent = (comp: JSX.Element) => (
     // 懒加载
@@ -28,43 +30,46 @@ const withLoadingComponent = (comp: JSX.Element) => (
 const adminRouter: RouteObject[] = [
     {
         // 首页
-        id:"1",
         path: "/index",
         element: withLoadingComponent(<Index />)
     },
     {
         // 科室信息管理
-        id:"1",
         path: "/informationManagement",
         element: withLoadingComponent(<InformationManagement />)
     },
     {
         // 医生岗位迁移
-        id:"1",
         path: "/doctorJobTransfer",
         element: withLoadingComponent(<DoctorJobTransfer />)
     },
     {
         // 医生注册登记
-        id:"1",
         path: "/doctorRegistration",
         element: withLoadingComponent(<DoctorRegistration />)
     },
     {
         // 医生信息管理
-        id:"1",
         path: "/doctorInformationManagement",
         element: withLoadingComponent(<DoctorInformationManagement />)
     },
     {
         // 患者信息管理
-        id:"1",
         path: "/patientInformationManagement",
         element: withLoadingComponent(<PatientInformationManagement />)
     },
     {
+        // 缺货统计
+        path: "/drugEntryAndExit",
+        element: withLoadingComponent(<DrugEntryAndExit />)
+    },
+    {
+        // 药品出入库
+        path: "/outOfStockStatistics",
+        element: withLoadingComponent(<OutOfStockStatistics />)
+    },
+    {
         // 个人信息管理
-        id:"1",
         path: "/personalInformationManagement",
         element: withLoadingComponent(<PersonalInformationManagement />)
     },

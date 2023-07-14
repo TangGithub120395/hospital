@@ -46,6 +46,7 @@ interface optionsType {
 interface optionsDataType{
   key:string,
   value:string
+  flag?:number
 }
 
 // 响应

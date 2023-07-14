@@ -50,13 +50,12 @@ const items: MenuItem[] = [
     getItem('未缴信息统计', '7', <UserOutlined />),
     getItem('财务信息管理', '8', <UserOutlined />),
   ]),
-  getItem('药品管理', '/sub4', <UserOutlined />, [
-    getItem('缺货统计', '9', <UserOutlined />),
-    getItem('药品出入库', '10', <UserOutlined />),
+  getItem('药品管理', '/drugManagement', <UserOutlined />, [
+    getItem('缺货统计', '/drugEntryAndExit', <UserOutlined />),
+    getItem('药品出入库', '/outOfStockStatistics', <UserOutlined />),
   ]),
   getItem('系统设置', '/systemSettings', <UserOutlined />, [
     getItem('个人信息管理', '/personalInformationManagement', <UserOutlined />),
-    getItem('菜单信息管理', '12', <UserOutlined />),
   ]),
 ];
 
