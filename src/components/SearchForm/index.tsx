@@ -17,8 +17,6 @@ type propsType = {
 
 
 const App: React.FC<propsType> = (props: propsType) => {
-  // 判断收回动画是否出现
-  const [animationFlag, setAnimationlag] = useState(styles.allPageFirst)
 
   // 表单信息
   const [form] = Form.useForm();

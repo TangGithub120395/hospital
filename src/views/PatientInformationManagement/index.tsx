@@ -90,9 +90,9 @@ export default function View() {
       title: '患者性别',
       dataIndex: 'patientSex',
       align: 'center',
-      render: (record:PatientDataType) => {
+      render: (record) => {
         return (
-          <div>{record.patientSex === 1 ? '男' : '女'}</div>
+          <div>{record == 1 ? '男' : '女'}</div>
         )
       }
     },

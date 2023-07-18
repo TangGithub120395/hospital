@@ -53,11 +53,18 @@ export const quertPatientAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promis
 
 /* 药品管理开始 */
 // 缺货统计
-// 查
+// 查少于一定数量的药品
 export const getScarceDrugsAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("drugs/getScarceDrugs", {params});
 // 补货
 export const drugReplenishment = (params: object): Promise<CurrentAPIRes> => request.put("/drugs/drugReplenishment", params);
 // 药品出入库
-
+// 增
+export const adddrugsAPI = (params: object): Promise<CurrentAPIRes> => request.post("/drugs", params);
+// 删
+export const deldrugsAPI = (params: number): Promise<CurrentAPIRes> => request.delete("/drugs/" + params);
+// 改
+export const updatedrugsAPI = (params: object): Promise<CurrentAPIRes> => request.put("/drugs", params);
+// 查
+export const quertdrugsAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/drugs", {params});
 /* 药品管理结束 */
 

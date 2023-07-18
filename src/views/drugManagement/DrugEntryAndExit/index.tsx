@@ -33,8 +33,9 @@ export default function View() {
 
   // 字段数组
   let options: Array<optionsType> = [
-    { value: 'doctor_name', label: '医生姓名' },
-    { value: 'doctor_tel', label: '医生电话' },
+    { value: 'drugs_name', label: '药物名称' },
+    { value: 'drugs_type', label: '药品类型' },
+    { value: 'production_location', label: '生产公司' }
   ]
 
   // 查找表单
@@ -146,7 +147,7 @@ export default function View() {
       render: (_, record) => {
         return (
           <Space>
-            <Popover placement="rightBottom" title={record.drugsName} content={formContent()} trigger="click">
+            <Popover placement="bottomRight" title={record.drugsName} content={formContent()} trigger="click">
               <Button size='small' type="link">补货</Button>
             </Popover>
           </Space>
