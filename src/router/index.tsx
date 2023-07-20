@@ -17,6 +17,8 @@ const PersonalInformationManagement = lazy(() => import("../views/systemSettings
 import { Navigate, RouteObject } from 'react-router-dom'
 import DrugEntryAndExit from '../views/drugManagement/DrugEntryAndExit'
 import OutOfStockStatistics from '../views/drugManagement/OutOfStockStatistics'
+import UnpaidInformationStatistics from '../views/financialManagement/UnpaidInformationStatistics'
+import FinancialInformationManagement from '../views/financialManagement/FinancialInformationManagement'
 // 写法简化
 const withLoadingComponent = (comp: JSX.Element) => (
     // 懒加载
@@ -72,6 +74,16 @@ const adminRouter: RouteObject[] = [
         // 个人信息管理
         path: "/personalInformationManagement",
         element: withLoadingComponent(<PersonalInformationManagement />)
+    },
+    {
+        // 未缴费信息统计
+        path: "/unpaidInformationStatistics.html",
+        element: withLoadingComponent(<UnpaidInformationStatistics />)
+    },
+    {
+        // 财务信息管理
+        path: "/financialInformationManagement.html",
+        element: withLoadingComponent(<FinancialInformationManagement />)
     },
 ]
 

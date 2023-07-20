@@ -1,4 +1,4 @@
-import { Button, Card, Form, Input, InputNumber, Radio, Select, Space, message } from 'antd'
+import { Button, Card, Form, Input, InputNumber, Radio, Select, Space, message, theme } from 'antd'
 import style from './index.module.scss'
 import { SendOutlined, RedoOutlined } from '@ant-design/icons';
 import { addDoctorAPI, queryAllDepartmentAPI } from "../../../apis/api.ts";
@@ -20,6 +20,16 @@ interface DataType {
 }
 
 export default function View() {
+  
+  // 主题
+  const { token } = theme.useToken();
+  const formStyle = {
+    maxWidth: 'none',
+    background: token.colorFillAlter,
+    borderRadius: token.borderRadiusLG,
+    padding: '24px 0 0 0 ',
+  };
+  
   // 科室列表
   const [options, setOptions] = useState<Array<DataType>>();
   // 调查全部科室接口
@@ -56,7 +66,7 @@ export default function View() {
   const [form] = Form.useForm();
   return (
     <Card title="医生注册登记" bordered={false} size='small' style={{ width: '100%', minHeight: 'calc(100vh - 80px)' }}>
-      <div className={style.allPage}>
+      <div className={style.allPage}  style={formStyle}>
         <div className={style.contentBox}>
           <Form
             form={form}

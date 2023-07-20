@@ -175,7 +175,7 @@ export default function View() {
               <Button type="text" style={{ color: '#1677ff' }} onClick={changeType}>患者{flag ? "注册" : "登录"}</Button>
             </Form.Item>
 
-            <Form.Item wrapperCol={{ offset: 10 }}>
+            <Form.Item style={{float:'right',width:'190px'}}>
               <Button type="primary" htmlType="submit">
                 {/* <CheckOutlined /> */}
                 <SendOutlined />

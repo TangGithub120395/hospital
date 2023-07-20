@@ -68,3 +68,11 @@ export const updatedrugsAPI = (params: object): Promise<CurrentAPIRes> => reques
 export const quertdrugsAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/drugs", {params});
 /* 药品管理结束 */
 
+/* 系统设置开始 */
+// 个人信息管理
+// 查管理员信息
+export const findAdminByIdAPI = (params: number): Promise<CurrentAPIRes> => request.get("/userAdmin/findAdminById/" + params);
+// 改管理员信息
+export const updateAdminAPI = (params: object): Promise<CurrentAPIRes> => request.put("/userAdmin/", params);
+/* 系统设置结束 */
+

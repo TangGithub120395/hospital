@@ -65,3 +65,9 @@ interface CurrentAPIRes {
   data?: null | Array<T> | object;
   msg: string;
 }
+
+// 查管理
+interface UpdatePasswordType{
+  adminId:number
+  adminPassword:string
+}

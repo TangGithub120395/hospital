@@ -46,9 +46,9 @@ const items: MenuItem[] = [
     getItem('医生信息管理', '/doctorInformationManagement', <UserOutlined />),
   ]),
   getItem('患者信息管理', '/patientInformationManagement', <UserOutlined />),
-  getItem('财务管理', '/sub3', <UserOutlined />, [
-    getItem('未缴信息统计', '7', <UserOutlined />),
-    getItem('财务信息管理', '8', <UserOutlined />),
+  getItem('财务管理', '/financialManagement', <UserOutlined />, [
+    getItem('未缴信息统计', '/unpaidInformationStatistics.html', <UserOutlined />),
+    getItem('财务信息管理', '/financialInformationManagement.html', <UserOutlined />),
   ]),
   getItem('药品管理', '/drugManagement', <UserOutlined />, [
     getItem('缺货统计', '/drugEntryAndExit', <UserOutlined />),
