@@ -50,8 +50,10 @@ const App: React.FC = () => {
       // 存储用户信息
       cookie.remove('userData')
       // 跳转
-      navigateTo("/login")
-      message.success("退出登录成功!")
+      // navigateTo("/login")
+      // message.success("退出登录成功!")
+      window.location.href = '/login'; // 跳转到当前路由
+      window.location.reload(); // 刷新页面
     }
   };
   return (

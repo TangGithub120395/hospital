@@ -19,6 +19,12 @@ import DrugEntryAndExit from '../views/drugManagement/DrugEntryAndExit'
 import OutOfStockStatistics from '../views/drugManagement/OutOfStockStatistics'
 import UnpaidInformationStatistics from '../views/financialManagement/UnpaidInformationStatistics'
 import FinancialInformationManagement from '../views/financialManagement/FinancialInformationManagement'
+import PatientRegistration from '../views/PatientRegistration'
+import PrescriptionInformation from '../views/PrescriptionInformation'
+import PaymentInformation from '../views/PaymentInformation'
+import CaseFiling from '../views/CaseFiling'
+import PrescriptionManagement from '../views/PrescriptionManagement'
+import ReservationInformation from '../views/ReservationInformation'
 // 写法简化
 const withLoadingComponent = (comp: JSX.Element) => (
     // 懒加载
@@ -77,14 +83,46 @@ const adminRouter: RouteObject[] = [
     },
     {
         // 未缴费信息统计
-        path: "/unpaidInformationStatistics.html",
+        path: "/unpaidInformationStatistics",
         element: withLoadingComponent(<UnpaidInformationStatistics />)
     },
     {
         // 财务信息管理
-        path: "/financialInformationManagement.html",
+        path: "/financialInformationManagement",
         element: withLoadingComponent(<FinancialInformationManagement />)
     },
+    {
+        // 患者预约挂号
+        path: "/patientRegistration",
+        element: withLoadingComponent(<PatientRegistration />)
+    },
+    {
+        // 患者处方信息
+        path: "/prescriptionInformation",
+        element: withLoadingComponent(<PrescriptionInformation />)
+    },
+    {
+        // 患者缴费信息
+        path: "/paymentInformation",
+        element: withLoadingComponent(<PaymentInformation />)
+    },
+    {
+        // 医生病例归档
+        path: "/caseFiling",
+        element: withLoadingComponent(<CaseFiling />)
+    },
+    {
+        // 医生处方管理
+        path: "/prescriptionManagement",
+        element: withLoadingComponent(<PrescriptionManagement />)
+    },
+    {
+        // 医生预约信息
+        path: "/reservationInformation",
+        element: withLoadingComponent(<ReservationInformation />)
+    },
+    
+    
 ]
 
 const routes = [

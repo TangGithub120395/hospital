@@ -10,13 +10,10 @@ import style from './index.module.scss'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 import type { SubMenuType } from 'rc-menu/lib/interface';
 
-import Router from '../../router'
-
-const [, allRouter,] = Router
-// console.log(allRouter.children);
-
 // 导入退出登录组件
 import LogOut from '../../components/home/LogOut'
+// 引入cookie
+import cookie from 'react-cookies'
 
 const { Header, Content, Sider } = Layout;
 
@@ -35,7 +32,12 @@ function getItem(
     label,
   } as MenuItem;
 }
-const items: MenuItem[] = [
+
+// 拿用户信息
+let userData = cookie.load("userData")
+
+// 管理员侧边栏
+const adminPage = [
   getItem('系统首页', '/index', <UserOutlined />),
   getItem('科室管理', '/departmentManagement', <UserOutlined />, [
     getItem('科室信息管理', '/informationManagement', <UserOutlined />),
@@ -47,8 +49,8 @@ const items: MenuItem[] = [
   ]),
   getItem('患者信息管理', '/patientInformationManagement', <UserOutlined />),
   getItem('财务管理', '/financialManagement', <UserOutlined />, [
-    getItem('未缴信息统计', '/unpaidInformationStatistics.html', <UserOutlined />),
-    getItem('财务信息管理', '/financialInformationManagement.html', <UserOutlined />),
+    getItem('未缴信息统计', '/unpaidInformationStatistics', <UserOutlined />),
+    getItem('财务信息管理', '/financialInformationManagement', <UserOutlined />),
   ]),
   getItem('药品管理', '/drugManagement', <UserOutlined />, [
     getItem('缺货统计', '/drugEntryAndExit', <UserOutlined />),
@@ -58,6 +60,31 @@ const items: MenuItem[] = [
     getItem('个人信息管理', '/personalInformationManagement', <UserOutlined />),
   ]),
 ];
+
+// 医生侧边栏
+const doctorPage = [
+  getItem('系统首页', '/index', <UserOutlined />),
+  getItem('病例归档', '/caseFiling', <UserOutlined />),
+  getItem('处方管理', '/prescriptionManagement', <UserOutlined />),
+  getItem('预约信息', '/reservationInformation', <UserOutlined />),
+  getItem('系统设置', '/systemSettings', <UserOutlined />, [
+    getItem('个人信息管理', '/personalInformationManagement', <UserOutlined />),
+  ]),
+];
+
+// 患者侧边栏
+const patientPage = [
+  getItem('系统首页', '/index', <UserOutlined />),
+  getItem('预约挂号', '/patientRegistration', <UserOutlined />),
+  getItem('处方信息', '/prescriptionInformation', <UserOutlined />),
+  getItem('缴费信息', '/paymentInformation', <UserOutlined />),
+  getItem('系统设置', '/systemSettings', <UserOutlined />, [
+    getItem('个人信息管理', '/personalInformationManagement', <UserOutlined />),
+  ]),
+];
+
+// 侧边栏数据源
+const items: MenuItem[] = userData.userIdentity == 1 ? adminPage : userData.userIdentity == 2 ? doctorPage : patientPage
 
 const View: React.FC = () => {
   // 拿当前路由
@@ -210,7 +237,7 @@ const View: React.FC = () => {
 
         </Header>
         {/* 内容布局 */}
-        <Content style={{ overflowY: 'scroll',maxHeight:'calc(100vh - 50px)' }}>
+        <Content style={{ overflowY: 'scroll', maxHeight: 'calc(100vh - 50px)' }}>
           <div style={{ margin: '14px' }}>
             <Outlet />
           </div>

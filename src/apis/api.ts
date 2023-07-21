@@ -74,5 +74,9 @@ export const quertdrugsAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<
 export const findAdminByIdAPI = (params: number): Promise<CurrentAPIRes> => request.get("/userAdmin/findAdminById/" + params);
 // 改管理员信息
 export const updateAdminAPI = (params: object): Promise<CurrentAPIRes> => request.put("/userAdmin/", params);
+// 查患者
+export const findPatientByIdAPI = (params: number): Promise<CurrentAPIRes> => request.get("/patient/findPatientById/" + params);
+// 根据科室id查科室
+export const queryDepartmentNameAPI = (params: number) => request.get("/department/queryDepartmentName/" + params);
 /* 系统设置结束 */
 

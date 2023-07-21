@@ -20,6 +20,7 @@ import { CheckboxChangeEvent } from 'antd/es/checkbox';
 
 export default function View() {
 
+
   // 拿路由hook
   let navigateTo = useNavigate();
 

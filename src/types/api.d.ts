@@ -71,3 +71,7 @@ interface UpdatePasswordType{
   adminId:number
   adminPassword:string
 }
+interface DepartmentNameType {
+  departmentId: number;
+  departmentName: string;
+}
