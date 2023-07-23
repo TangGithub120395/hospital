@@ -80,3 +80,14 @@ export const findPatientByIdAPI = (params: number): Promise<CurrentAPIRes> => re
 export const queryDepartmentNameAPI = (params: number) => request.get("/department/queryDepartmentName/" + params);
 /* 系统设置结束 */
 
+/* 预约挂号-患者 */
+// 增
+export const addRegisterAPI = (params: object): Promise<CurrentAPIRes> => request.post("/register", params);
+// 删
+export const delRegisterAPI = (params: number): Promise<CurrentAPIRes> => request.delete("/register/" + params);
+// 改
+export const updateRegisterAPI = (params: object): Promise<CurrentAPIRes> => request.put("/register", params);
+// 查
+export const queryRegisterAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/register", {params});
+
+/* 预约挂号-患者 */
