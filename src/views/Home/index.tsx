@@ -64,9 +64,9 @@ const adminPage = [
 // 医生侧边栏
 const doctorPage = [
   getItem('系统首页', '/index', <UserOutlined />),
-  getItem('病例归档', '/caseFiling', <UserOutlined />),
-  getItem('处方管理', '/prescriptionManagement', <UserOutlined />),
   getItem('预约信息', '/reservationInformation', <UserOutlined />),
+  getItem('处方开具', '/prescriptionManagement', <UserOutlined />),
+  getItem('病例归档', '/caseFiling', <UserOutlined />),
   getItem('系统设置', '/systemSettings', <UserOutlined />, [
     getItem('个人信息管理', '/personalInformationManagement', <UserOutlined />),
   ]),

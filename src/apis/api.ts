@@ -18,7 +18,7 @@ export const delInformationManagementAPI = (params: number): Promise<CurrentAPIR
 // 改
 export const updateInformationManagementAPI = (params: object): Promise<CurrentAPIRes> => request.put("/department", params);
 // 查
-export const getInformationManagementAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/department", {params});
+export const getInformationManagementAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/department", { params });
 /* 科室管理结束 */
 
 /* 医生管理开始 */
@@ -27,7 +27,7 @@ export const addDoctorAPI = (params: object): Promise<CurrentAPIRes> => request.
 //查全部科室
 export const queryAllDepartmentAPI = (): Promise<QueryAPIRes> => request.get("/department/queryAllDepartment");
 // 根据科室id查全部医生
-export const queryDepartmentDoctorAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/doctor/queryDepartmentDoctor", {params});
+export const queryDepartmentDoctorAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/doctor/queryDepartmentDoctor", { params });
 // 根据id查医生
 export const queryOneDoctorAPI = (params: number): Promise<CurrentAPIRes> => request.get("doctor/queryOneDoctor/" + params);
 // 修改医生科室
@@ -37,7 +37,7 @@ export const delDoctorAPI = (params: number): Promise<CurrentAPIRes> => request.
 // 改
 export const updateDoctorAPI = (params: object): Promise<CurrentAPIRes> => request.put("/doctor", params);
 // 查
-export const getDoctorAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/doctor", {params});
+export const getDoctorAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/doctor", { params });
 /* 医生管理结束 */
 
 /* 患者信息管理开始 */
@@ -48,13 +48,13 @@ export const delPatientAPI = (params: number): Promise<CurrentAPIRes> => request
 // 改
 export const updatePatientAPI = (params: object): Promise<CurrentAPIRes> => request.put("/patient", params);
 // 查
-export const quertPatientAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/patient", {params});
+export const quertPatientAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/patient", { params });
 /* 患者信息管理结束 */
 
 /* 药品管理开始 */
 // 缺货统计
 // 查少于一定数量的药品
-export const getScarceDrugsAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("drugs/getScarceDrugs", {params});
+export const getScarceDrugsAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("drugs/getScarceDrugs", { params });
 // 补货
 export const drugReplenishment = (params: object): Promise<CurrentAPIRes> => request.put("/drugs/drugReplenishment", params);
 // 药品出入库
@@ -65,7 +65,7 @@ export const deldrugsAPI = (params: number): Promise<CurrentAPIRes> => request.d
 // 改
 export const updatedrugsAPI = (params: object): Promise<CurrentAPIRes> => request.put("/drugs", params);
 // 查
-export const quertdrugsAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/drugs", {params});
+export const quertdrugsAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/drugs", { params });
 /* 药品管理结束 */
 
 /* 系统设置开始 */
@@ -88,6 +88,21 @@ export const delRegisterAPI = (params: number): Promise<CurrentAPIRes> => reques
 // 改
 export const updateRegisterAPI = (params: object): Promise<CurrentAPIRes> => request.put("/register", params);
 // 查
-export const queryRegisterAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/register", {params});
-
+export const queryRegisterAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/register", { params });
+// 根据科室id查医生
+export const findDoctorAPI = (params: number): Promise<CurrentAPIRes> => request.get("/register/" + params);
 /* 预约挂号-患者 */
+
+/* 预约信息-医生 */
+// 查
+export const queryDoctorPageAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/register/queryDoctorPage", { params });
+// 更改状态
+export const stateChangeAPI = (params: number): Promise<CurrentAPIRes> => request.put("/register/stateChange/" + params);
+/* 预约信息-医生 */
+
+/* 处方开具-医生 */
+// 查
+export const queryPrescriptionPageAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/register/queryPrescriptionPage", { params });
+// 更改状态
+// export const stateChangeAPI = (params: number): Promise<CurrentAPIRes> => request.put("/register/stateChange/" + params);
+/* 处方开具-医生 */

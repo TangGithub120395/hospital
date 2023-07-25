@@ -3,12 +3,12 @@ import { QuestionCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import SearchForm from "../../components/SearchForm";
 import { AxiosRequestConfig } from "axios";
-import { queryRegisterAPI, delRegisterAPI } from "../../apis/api";
+import { queryRegisterAPI, stateChangeAPI } from "../../apis/api";
 import style from './index.module.scss'
 import { ColumnsType } from "antd/es/table";
-import DrugManageForm from "../../components/drugManagement/DrugManageForm";
 // 引入cookie
 import cookie from 'react-cookies'
+import RegistrationForm from "../../components/patientRegistration/RegistrationForm";
 
 type RegisterDataType = {
   registerId: number;
@@ -18,11 +18,6 @@ type RegisterDataType = {
   completionStatus: number;
   registerDate: string;
   createTime: string;
-}
-type ColumnsDataType = {
-  title: string;
-  dataIndex: string;
-  align: string;
 }
 
 export default function View() {
@@ -37,9 +32,7 @@ export default function View() {
 
   // 字段数组
   let options: Array<optionsType> = [
-    { value: 'drugs_name', label: '药物名称' },
-    { value: 'drugs_type', label: '科室' },
-    { value: 'production_location', label: '生产公司' }
+    { value: 'register_date', label: '预约时间' },
   ]
 
   // 拿用户信息
@@ -80,8 +73,8 @@ export default function View() {
 
   // 挂号取消
   const deleteBtn = async (id: number) => {
-    const deleteFlag = await delRegisterAPI(id)
-    deleteFlag.code === 0 ? message.success(deleteFlag.msg) : message?.success(deleteFlag.msg);
+    const updateFlag = await stateChangeAPI(id)
+    updateFlag.code === 0 ? message.success(updateFlag.msg) : message?.success(updateFlag.msg);
     queryFunc()
   }
 
@@ -169,13 +162,13 @@ export default function View() {
   // 顶部按钮
   const topBtn = <Space>
     <Button type="primary" shape="circle" icon={<SearchOutlined />} onClick={() => open === null ? setOpen(true) : setOpen(!open)} />
-    <DrugManageForm title={'药品入库'} columns={columns as Array<ColumnsDataType>} queryFunc={queryFunc} />
+    <RegistrationForm title={'预约挂号'} queryFunc={queryFunc} />
   </Space>
   /* 表格结束 */
 
 
   return (
-    <Card className={style.allPage} size='small' title="药品出入库" extra={topBtn} bordered={false} style={{ width: '100%', minHeight: 'calc(100vh - 80px)' }}>
+    <Card className={style.allPage} size='small' title="预约挂号" extra={topBtn} bordered={false} style={{ width: '100%', minHeight: 'calc(100vh - 80px)' }}>
       {/* 搜索组件 */}
       <SearchForm options={options} queryFunc={queryFunc} queryAPI={queryAPI} open={open} />
       <Table
