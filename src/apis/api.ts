@@ -103,6 +103,8 @@ export const stateChangeAPI = (params: number): Promise<CurrentAPIRes> => reques
 /* 处方开具-医生 */
 // 查
 export const queryPrescriptionPageAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/register/queryPrescriptionPage", { params });
-// 更改状态
-// export const stateChangeAPI = (params: number): Promise<CurrentAPIRes> => request.put("/register/stateChange/" + params);
+// 查全部药品
+export const getAllDrugsPageAPI = (): Promise<CurrentAPIRes> => request.get("/drugs/getAllDrugs");
+// 新增处方
+export const addPrescriptionAPI = (params: object): Promise<CurrentAPIRes> => request.post("/prescription", params);
 /* 处方开具-医生 */

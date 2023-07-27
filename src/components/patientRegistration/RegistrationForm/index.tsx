@@ -73,10 +73,9 @@ const App: React.FC<Values> = ({ title, queryFunc }) => {
       ...values,
       patientId: userData.patientId,
       completionStatus: 0,
+      prescriptionStatus: 0,
       registerDate: registerDate
     };
-    console.log(submitObj);
-
     confirm({
       title: '确认预约？',
       okText: '确认',

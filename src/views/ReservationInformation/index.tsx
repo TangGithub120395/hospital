@@ -110,7 +110,7 @@ export default function View() {
       align: 'center',
       render: (_, record) => {
         return (
-          <Tag color={record.completionStatus == 1 ? "success" : "warning"}>{record.completionStatus == 1 ? '完成' : '未完成'}</Tag>
+          <Tag color={record.completionStatus == 1 ? "success" : "warning"}>{record.completionStatus == 1 ? '已就诊' : '未就诊'}</Tag>
         )
       }
     },

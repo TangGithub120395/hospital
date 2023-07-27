@@ -8,9 +8,12 @@ import style from './index.module.scss'
 import { ColumnsType } from "antd/es/table";
 // 引入cookie
 import cookie from 'react-cookies'
+import RegistrationForm from "../../components/patientRegistration/RegistrationForm";
+import AddPrescriptionForm from "../../components/prescriptionManagement/AddPrescriptionForm";
 
 type PrescriptionDataType = {
   registerId: number;
+  patientId:number;
   patientName: string;
   patientSex: number;
   patientAge: number;
@@ -61,6 +64,7 @@ export default function View() {
     setTableList(tableList)
     setLoading(false)
   };
+
 
   // 初始查找
   useEffect(() => {
@@ -128,8 +132,13 @@ export default function View() {
       title: '操作',
       align: 'center',
       render: (_, record) => {
+        const RegistrationData = {
+          registerId: record.registerId,
+          doctorId: userData.doctorId,
+          patientId: record.patientId
+        }
         return (
-          <Button size='small' type="link" disabled={record.prescriptionStatus === 1}>处方开具</Button>
+          <AddPrescriptionForm title="处方开具" RegistrationData={RegistrationData} queryFunc={queryFunc} />
         )
       },
     },
