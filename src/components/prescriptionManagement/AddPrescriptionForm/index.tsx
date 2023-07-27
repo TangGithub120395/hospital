@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Divider, Form, Input, InputNumber, Modal, Select, Space, message } from 'antd';
 import { ExclamationCircleFilled, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { addPrescriptionAPI, getAllDrugsPageAPI } from '../../../apis/api';
+import TextArea from 'antd/es/input/TextArea';
 
 interface MedicineDataType {
   registerId: number;
@@ -16,6 +17,7 @@ interface RegistrationDataType {
   registerId: number;
   doctorId: number;
   patientId: number;
+  prescriptionDiagnosis?:string;
   medicineList?: Array<MedicineDataType>
 }
 
@@ -53,6 +55,7 @@ const App: React.FC<Values> = ({ title, RegistrationData, queryFunc }) => {
   const onCreate = (values: any) => {
     let submitForm = {
       ...RegistrationData,
+      prescriptionDiagnosis:values.prescriptionDiagnosis,
       children: values.children
     }
     for (let i = 0; i < submitForm.children.length; i++) {
@@ -120,9 +123,10 @@ const App: React.FC<Values> = ({ title, RegistrationData, queryFunc }) => {
           style={{ maxWidth: 800 }}
         >
           <Form.Item
-            label='挂号ID'
+            name='prescriptionDiagnosis'
+            label='诊断结果'
           >
-            <Input disabled defaultValue={RegistrationData.registerId} style={{ width: '200px' }} />
+            <TextArea rows={4} placeholder="请输入诊断结果" />
           </Form.Item>
           <Form.List name="children">
             {(fields, { add, remove }) => (
