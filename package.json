@@ -10,8 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.1.0",
-    "antd": "^5.5.1",
+    "@ant-design/icons": "^5.1.4",
+    "antd": "^5.6.0",
     "axios": "^1.4.0",
     "react": "^18.2.0",
     "react-cookies": "^0.1.1",
@@ -22,6 +22,7 @@
     "reset-css": "^5.0.1"
   },
   "devDependencies": {
+    "@types/body-parser": "^1.19.2",
     "@types/node": "^20.3.1",
     "@types/react": "^18.0.28",
     "@types/react-cookies": "^0.1.0",

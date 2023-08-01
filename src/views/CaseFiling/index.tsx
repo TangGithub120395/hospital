@@ -1,19 +1,18 @@
-import { Button, Card, Space, Table, Tag } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { Button, Card, Popconfirm, Space, Table, Tag, message } from "antd";
+import { QuestionCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import SearchForm from "../../components/SearchForm";
 import { AxiosRequestConfig } from "axios";
-import { queryPrescriptionPageAPI } from "../../apis/api";
+import { delPrescriptionAPI, queryCasePageAPI } from "../../apis/api";
 import style from './index.module.scss'
 import { ColumnsType } from "antd/es/table";
 // 引入cookie
 import cookie from 'react-cookies'
-import RegistrationForm from "../../components/patientRegistration/RegistrationForm";
-import AddPrescriptionForm from "../../components/prescriptionManagement/AddPrescriptionForm";
+import CaseDetails from "../../components/caseFiling/CaseDetails";
 
 type PrescriptionDataType = {
   registerId: number;
-  patientId:number;
+  patientId: number;
   patientName: string;
   patientSex: number;
   patientAge: number;
@@ -35,7 +34,7 @@ export default function View() {
 
   // 字段数组
   let options: Array<optionsType> = [
-    { value: 'register_date', label: '预约时间' },
+    { value: 'prescription_time', label: '开具时间' },
   ]
 
   // 拿用户信息
@@ -60,11 +59,17 @@ export default function View() {
   // 查找接口
   const queryAPI = async (searchForm: AxiosRequestConfig<QueryAPIReq>) => {
     // 发起查找请求
-    const tableList = await queryPrescriptionPageAPI(searchForm)
+    const tableList = await queryCasePageAPI(searchForm)
     setTableList(tableList)
     setLoading(false)
   };
 
+  // 删除
+  const deleteBtn = async (id: number) => {
+    const deleteFlag = await delPrescriptionAPI(id)
+    deleteFlag.code === 0 ? message.success(deleteFlag.msg) : message.success(deleteFlag.msg);
+    queryFunc()
+  }
 
   // 初始查找
   useEffect(() => {
@@ -79,7 +84,7 @@ export default function View() {
   const columns: ColumnsType<PrescriptionDataType> = [
     {
       title: 'ID',
-      dataIndex: 'registerId',
+      dataIndex: 'prescriptionId',
       align: 'center',
       width: 50,
     },
@@ -105,25 +110,32 @@ export default function View() {
     },
     {
       title: '开具时间',
-      dataIndex: 'registerDate',
+      dataIndex: 'prescriptionTime',
       align: 'center',
     },
     {
       title: '病理诊断',
       dataIndex: 'prescriptionDiagnosis',
       align: 'center',
+      width: 400,
+      ellipsis: true, // 使用ellipsis类实现超出隐藏
     },
     {
       title: '操作',
       align: 'center',
       render: (_, record) => {
-        const RegistrationData = {
-          registerId: record.registerId,
-          doctorId: userData.doctorId,
-          patientId: record.patientId
-        }
         return (
-          <AddPrescriptionForm title="处方开具" RegistrationData={RegistrationData} queryFunc={queryFunc} />
+          <Popconfirm
+            placement="bottomRight"
+            title={'确认删除此条病例？'}
+            description={'此操作将无法撤回！'}
+            icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
+            okText="确认"
+            cancelText="取消"
+            onConfirm={() => deleteBtn(record.registerId as number)}
+          >
+            <Button size='small' danger type="link">删除病例</Button>
+          </Popconfirm >
         )
       },
     },
@@ -158,11 +170,14 @@ export default function View() {
       <Table
         columns={columns}
         dataSource={tableList?.data}
-        rowKey='registerId'
+        rowKey='prescriptionId'
         size='middle' bordered
         loading={loading}
         pagination={paginationProps}
         scroll={{ x: 1250, }}
+        expandable={{
+          expandedRowRender: (record) => <CaseDetails registerId={record.registerId} />
+        }}
       />
     </Card>
   )

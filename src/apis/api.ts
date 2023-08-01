@@ -108,3 +108,17 @@ export const getAllDrugsPageAPI = (): Promise<CurrentAPIRes> => request.get("/dr
 // 新增处方
 export const addPrescriptionAPI = (params: object): Promise<CurrentAPIRes> => request.post("/prescription", params);
 /* 处方开具-医生 */
+
+/* 病例归档-医生 */
+// 病例分页查看
+export const queryCasePageAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/prescription", { params });
+// 删
+export const delPrescriptionAPI = (params: number): Promise<CurrentAPIRes> => request.delete("/prescription/" + params);
+// 根据挂号id查处方药品
+export const findPrescriptionDrugAPI = (params: number): Promise<CurrentAPIRes> => request.get("/prescription/" + params);
+/* 病例归档-医生 */
+
+/* 处方信息-患者 */
+// 处方分页查看
+export const queryPatientCasePageAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/prescription/queryPatientCasePage", { params });
+/* 处方信息-患者 */

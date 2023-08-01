@@ -1,4 +1,8 @@
-@media only screen and (min-width: 700px) {    
+@media only screen and (min-width: 700px) {
   .allPage {
+    .topBox {
+      display: flex;
+      justify-content: space-between;
+    }
   }
 }
