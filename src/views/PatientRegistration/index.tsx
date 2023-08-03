@@ -135,8 +135,9 @@ export default function View() {
             okText="确认"
             cancelText="取消"
             onConfirm={() => deleteBtn(record.registerId as number)}
+            disabled={record.completionStatus==1}
           >
-            <Button size='small' danger type="link" >取消挂号</Button>
+            <Button size='small' danger type="link" disabled={record.completionStatus==1} >取消挂号</Button>
           </Popconfirm >
         )
       },

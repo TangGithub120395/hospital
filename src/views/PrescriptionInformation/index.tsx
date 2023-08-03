@@ -1,5 +1,5 @@
 import { Button, Card, Space, Table } from "antd";
-import SearchOutlined from "@ant-design/icons";
+import {SearchOutlined} from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import SearchForm from "../../components/SearchForm";
 import { AxiosRequestConfig } from "axios";

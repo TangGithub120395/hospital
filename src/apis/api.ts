@@ -122,3 +122,11 @@ export const findPrescriptionDrugAPI = (params: number): Promise<CurrentAPIRes> 
 // 处方分页查看
 export const queryPatientCasePageAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/prescription/queryPatientCasePage", { params });
 /* 处方信息-患者 */
+
+/* 缴费信息-患者 */
+// 缴费信息查看
+export const queryPatientPayPageAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/prescription/queryPatientPayPage", { params });
+// 支付宝沙箱
+export const alipayAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/alipay/pay", { params });
+
+/* 缴费信息-患者 */
