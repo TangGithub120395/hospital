@@ -128,5 +128,14 @@ export const queryPatientCasePageAPI = (params: AxiosRequestConfig<QueryAPIReq>)
 export const queryPatientPayPageAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/prescription/queryPatientPayPage", { params });
 // 支付宝沙箱
 export const alipayAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/alipay/pay", { params });
-
 /* 缴费信息-患者 */
+
+/* 订单信息-患者 */
+// 查询患者订单
+export const collectorPatientPageAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/collector/collectorPatientPage", { params });
+/* 订单信息-患者 */
+
+/* 未缴费统计-管理员 */
+// 未缴费统计
+export const queryAdminUnpayPageAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<QueryAPIRes> => request.get("/prescription/queryAdminUnpayPage", { params });
+/* 未缴费统计-管理员 */

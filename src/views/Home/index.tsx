@@ -77,7 +77,8 @@ const patientPage = [
   getItem('系统首页', '/index', <UserOutlined />),
   getItem('预约挂号', '/patientRegistration', <UserOutlined />),
   getItem('处方信息', '/prescriptionInformation', <UserOutlined />),
-  getItem('缴费信息', '/paymentInformation', <UserOutlined />),
+  getItem('缴费入口', '/paymentInformation', <UserOutlined />),
+  getItem('订单信息', '/orderingInformation', <UserOutlined />),
   getItem('系统设置', '/systemSettings', <UserOutlined />, [
     getItem('个人信息管理', '/personalInformationManagement', <UserOutlined />),
   ]),

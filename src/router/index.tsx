@@ -25,6 +25,7 @@ import PaymentInformation from '../views/PaymentInformation'
 import CaseFiling from '../views/CaseFiling'
 import PrescriptionManagement from '../views/PrescriptionManagement'
 import ReservationInformation from '../views/ReservationInformation'
+import OrderingInformation from '../views/OrderingInformation'
 // 写法简化
 const withLoadingComponent = (comp: JSX.Element) => (
     // 懒加载
@@ -105,6 +106,11 @@ const adminRouter: RouteObject[] = [
         // 患者缴费信息
         path: "/paymentInformation",
         element: withLoadingComponent(<PaymentInformation />)
+    },
+    {
+        // 患者顶单信息
+        path: "/orderingInformation",
+        element: withLoadingComponent(<OrderingInformation />)
     },
     {
         // 医生病例归档

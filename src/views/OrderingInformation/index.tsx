@@ -1,12 +1,13 @@
-import { Button, Card, Space, Table, Tag } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { Button, Card, Popconfirm, Space, Table, Tag, message } from "antd";
+import { QuestionCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
+import SearchForm from "../../components/SearchForm";
 import { AxiosRequestConfig } from "axios";
-import { collectorPatientPageAPI } from "../../../apis/api";
+import { collectorPatientPageAPI } from "../../apis/api";
 import style from './index.module.scss'
 import { ColumnsType } from "antd/es/table";
 // 引入cookie
-import SearchForm from "../../../components/SearchForm";
+import cookie from 'react-cookies'
 
 type CollectorPatientType = {
   collectorId: number;
@@ -33,11 +34,14 @@ export default function View() {
     { value: 'trade_no', label: '订单编号' },
   ]
 
+  // 拿用户信息
+  let userData = cookie.load("userData")
 
   // 查找表单
   let searchForm = {
     key: options[0].value,
     value: "",
+    flag: userData.patientId,
     pageNum: 1,
     pageSize: 10
   }
