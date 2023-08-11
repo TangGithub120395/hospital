@@ -4,6 +4,7 @@ import cookie from 'react-cookies'
 import DoctorPage from '../../components/index/DoctorPage'
 import AdminPage from '../../components/index/AdminPage'
 import PatientPage from '../../components/index/PatientPage'
+import IndexCommon from '../../components/index/IndexCommon'
 export default function View() {
 
   // 拿用户信息
@@ -19,6 +20,7 @@ export default function View() {
 
   return (
     <div>
+      <IndexCommon />
       {showPage}
     </div>
   )
