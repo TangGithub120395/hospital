@@ -1,6 +1,11 @@
 // 统一管理项目中所有的请求路径 api
 import { AxiosRequestConfig } from "axios";
 import request from "./index"
+// 引入cookie
+import cookie from 'react-cookies'
+// 拿cookie
+const userData = cookie.load("userData");
+
 
 /* 登录页面开始 */
 // 登录
@@ -70,6 +75,16 @@ export const quertdrugsAPI = (params: AxiosRequestConfig<QueryAPIReq>): Promise<
 
 /* 系统设置开始 */
 // 个人信息管理
+// 恢复默认头像
+export const restoreDefaultAvatarAPI = (): Promise<CurrentAPIRes> => {
+  request.interceptors.request.use(config =>{
+    config.headers['userId'] = userData.adminId || userData.patientId || userData.doctorId,
+    config.headers['userIdentity'] = userData.userIdentity;
+    return config;
+  })
+  return request.put("/file/restoreDefaultAvatar")
+};
+
 // 查管理员信息
 export const findAdminByIdAPI = (params: number): Promise<CurrentAPIRes> => request.get("/userAdmin/findAdminById/" + params);
 // 改管理员信息

@@ -1,10 +1,7 @@
 import React from 'react';
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Dropdown, Avatar, message } from 'antd';
-import {
-  AntDesignOutlined,
-} from '@ant-design/icons';
+import { Dropdown, Avatar } from 'antd';
 import style from './index.module.scss'
 
 // 路由
@@ -63,7 +60,7 @@ const App: React.FC = () => {
     <div>
       <Dropdown menu={{ items, onClick }} trigger={['click']} className={style.allPage} >
         <a onClick={(e) => e.preventDefault()}>
-          <Avatar src={userData.headImg ? baseUrl + userData.headImg : null} />
+          <Avatar src={userData.headImg ? baseUrl + userData.headImg : null}  icon={<UserOutlined />} />
           <div style={window.innerWidth < 700 ? { display: 'none' } : { margin: '0 10px' }}>欢迎{userName}登录!</div>
           <DownOutlined style={window.innerWidth < 700 ? { display: 'none' } : {}} />
         </a>

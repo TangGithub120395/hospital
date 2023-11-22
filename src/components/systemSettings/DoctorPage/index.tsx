@@ -5,10 +5,11 @@ import style from './index.module.scss'
 // 引入cookie
 import cookie from 'react-cookies'
 import { RedoOutlined, CheckOutlined, ExclamationCircleFilled } from '@ant-design/icons';
-
+import UploadHeadImg from '../components/UploadHeadImg';
 // 类型接口定义
 interface DoctorDataType {
   doctorId: number;
+  headImg:string;
   departmentId: number;
   doctorName: string;
   doctorSex: number;
@@ -153,6 +154,7 @@ const App: React.FC = () => {
 
   return (
     <div className={style.allPage}>
+      <UploadHeadImg refresh={findDoctor} headImgUrl={userData.headImg}  />
       <Space direction="vertical" style={{ width: '100%' }}>
         <Descriptions size='middle' layout="horizontal" bordered >
           <Descriptions.Item label="医生ID">{doctorData?.doctorId}</Descriptions.Item>

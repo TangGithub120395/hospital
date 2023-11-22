@@ -1,7 +1,8 @@
-import { Button, Space, message, Avatar, Upload } from 'antd';
-import { RedoOutlined, UserOutlined, UploadOutlined } from '@ant-design/icons';
-import type { UploadProps } from 'antd';
-import styles from './index.module.scss'
+import { Button, Space, message, Avatar, Upload, Modal, UploadProps } from 'antd';
+import { RedoOutlined, UserOutlined, UploadOutlined, ExclamationCircleFilled } from '@ant-design/icons';
+import { restoreDefaultAvatarAPI } from "../../../../apis/api";
+const { confirm } = Modal;
+import styles from './index.module.scss';
 // 引入cookie
 import cookie from 'react-cookies'
 // 拿cookie
@@ -51,6 +52,28 @@ const uploadHeadImg: React.FC<PropsType> = (props) => {
       }
     }
   };
+  // 恢复默认头像
+  const restoreDefaultAvatar = () => {
+    confirm({
+      title: '确认恢复默认头像？',
+      icon: <ExclamationCircleFilled />,
+      content: '此操作不可撤回！',
+      okText: '确定',
+      cancelText: '取消',
+      async onOk() {
+        const { code, msg } = await restoreDefaultAvatarAPI();
+        if (code === 0) {
+          message.success(msg);
+          refresh();
+        } else {
+          message.error(msg);
+        }
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    })
+  }
 
   return (
     <Space align="end" className={styles.changeHead}>
@@ -62,7 +85,7 @@ const uploadHeadImg: React.FC<PropsType> = (props) => {
         <Upload {...uploadProps}>
           <Button icon={<UploadOutlined />} type="primary">上传更新头像</Button>
         </Upload>
-        <Button icon={<RedoOutlined />}>恢复默认头像</Button>
+        <Button icon={<RedoOutlined />} onClick={restoreDefaultAvatar}>恢复默认头像</Button>
       </Space>
     </Space>
   )
