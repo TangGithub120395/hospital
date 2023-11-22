@@ -1,9 +1,11 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { Button, Col, Descriptions, Divider, Form, Input, Modal, Row, Space, message, theme } from 'antd';
 import { findAdminByIdAPI, updateAdminAPI } from "../../../apis/api";
+import UploadHeadImg from '../components/UploadHeadImg';
 // 引入cookie
 import cookie from 'react-cookies'
 import { RedoOutlined, CheckOutlined, ExclamationCircleFilled } from '@ant-design/icons';
+import styles from './index.module.scss'
 
 // 类型接口定义
 interface AdminDataType {
@@ -17,9 +19,14 @@ interface AdminDataType {
   checkPassword?: string
 }
 
+interface UserDataType {
+  headImg?: string | null;
+  adminId: number;
+}
+
 const App: React.FC = () => {
   // 拿cookie
-  let userData = cookie.load("userData")
+  const userData: UserDataType = cookie.load("userData");
 
   // 主题
   const { token } = theme.useToken();
@@ -27,7 +34,7 @@ const App: React.FC = () => {
     maxWidth: 'none',
     background: token.colorFillAlter,
     borderRadius: token.borderRadiusLG,
-    padding: 20,
+    padding: 10,
   };
 
   // 管理员信息
@@ -122,8 +129,9 @@ const App: React.FC = () => {
   };
 
   return (
-    <div>
-      <Space size="large" direction="vertical" style={{ width: '100%' }}>
+    <div className={styles.allPage}>
+      <UploadHeadImg refresh={findAdmin} headImgUrl={userData.headImg} />
+      <Space direction="vertical" style={{ width: '100%' }}>
         <Descriptions size='middle' layout="vertical" bordered >
           <Descriptions.Item label="管理员ID">{adminData?.adminId}</Descriptions.Item>
           <Descriptions.Item label="姓名">{adminData?.adminName}</Descriptions.Item>
@@ -134,12 +142,12 @@ const App: React.FC = () => {
         </Descriptions>
         <div style={formStyle}>
           <div style={{ fontWeight: '600', fontSize: '14px', color: 'rgba(0, 0, 0, 0.88)' }}>管理员信息修改</div>
-          <Divider />
+          <Divider style={{margin:"15px  0"}} />
           {changeForm}
         </div>
         <div style={formStyle}>
           <div style={{ fontWeight: '600', fontSize: '14px', color: 'rgba(0, 0, 0, 0.88)' }}>管理员密码修改</div>
-          <Divider />
+          <Divider style={{margin:"15px  0"}} />
           <Form
             form={changePasswordForm}
             onFinish={onFinish}

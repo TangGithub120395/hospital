@@ -32,13 +32,13 @@ export default function View() {
   // 加载状态
   const [loading, setLoading] = useState(true);
 
-  // 字段数组
+  // 拿用户信息
+  let userData = cookie.load("userData")
+
+  // 下拉数组
   let options: Array<optionsType> = [
     { value: 'prescription_time', label: '开具时间' },
   ]
-
-  // 拿用户信息
-  let userData = cookie.load("userData")
 
   // 查找表单
   let searchForm = {

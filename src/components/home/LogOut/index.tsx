@@ -29,15 +29,18 @@ const items: MenuProps['items'] = [
 const App: React.FC = () => {
   // 拿路由hook
   let navigateTo = useNavigate();
+
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
   // 获取用户名
   let userName
-  const user = cookie.load('userData')
-  if (user.userIdentity == 1) {
-    userName = '管理员 ' + user.adminName + " "
-  } else if (user.userIdentity == 2) {
-    userName = '医生 ' + user.doctorName + " "
-  } else if (user.userIdentity == 3) {
-    userName = '患者 ' + user.patientName + " "
+  const userData = cookie.load('userData')
+  if (userData.userIdentity == 1) {
+    userName = '管理员 ' + userData.adminName + " "
+  } else if (userData.userIdentity == 2) {
+    userName = '医生 ' + userData.doctorName + " "
+  } else if (userData.userIdentity == 3) {
+    userName = '患者 ' + userData.patientName + " "
   }
 
   // 点击事件
@@ -60,7 +63,7 @@ const App: React.FC = () => {
     <div>
       <Dropdown menu={{ items, onClick }} trigger={['click']} className={style.allPage} >
         <a onClick={(e) => e.preventDefault()}>
-          <Avatar style={{ backgroundColor: '#1677ff' }} icon={<AntDesignOutlined />} />
+          <Avatar src={userData.headImg ? baseUrl + userData.headImg : null} />
           <div style={window.innerWidth < 700 ? { display: 'none' } : { margin: '0 10px' }}>欢迎{userName}登录!</div>
           <DownOutlined style={window.innerWidth < 700 ? { display: 'none' } : {}} />
         </a>
