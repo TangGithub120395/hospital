@@ -3,6 +3,8 @@
 #### 介绍
 某医院门诊诊疗系统的设计与实施
 
+后端仓库：https://gitee.com/dyuloon/hospital_springboot
+
 
 #### 软件架构
 前端开发工具：vsCode
