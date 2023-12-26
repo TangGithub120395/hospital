@@ -5,6 +5,8 @@
 
 后端仓库：https://gitee.com/dyuloon/hospital_springboot
 
+移动端仓库：https://gitee.com/dyuloon/hospital_mobile
+
 
 #### 软件架构
 前端开发工具：vsCode
